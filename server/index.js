@@ -1,11 +1,11 @@
-// imports
-import express from "express";
+import express from 'express';
+import { initDb } from './db.js';
 
-// init express
-const app = new express();
+const app = express();
 const port = 3001;
 
-// activate the server
+await initDb();
+
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
