@@ -1,0 +1,23 @@
+# Dependencies — exam explicitly says do NOT commit these
+node_modules/
+
+# SQLite database — generated at runtime by the server seed, not source code
+*.db
+
+# Vite build output — not part of the submission
+dist/
+
+# Environment files — would contain secrets
+.env
+.env.local
+
+# npm logs
+npm-debug.log*
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Personal files
+EXAM.txt
+STUDY_NOTES.md
