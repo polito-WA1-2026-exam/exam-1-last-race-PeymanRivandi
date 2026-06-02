@@ -3,9 +3,11 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import UserDao from './dao-users.js';
+import NetworkDao from './dao-network.js';
 import { initDb } from './db.js';
 
 const userDao = new UserDao();
+const networkDao = new NetworkDao();
 
 /*** Init express and set up the middlewares ***/
 const app = express();
@@ -90,6 +92,23 @@ app.delete('/api/sessions/current', (req, res) => {
     req.logout(() => {
         res.end();
     });
+});
+
+
+/*** Network APIs ***/
+
+// GET /api/network — all lines with their ordered stations (Setup phase map)
+app.get('/api/network', isLoggedIn, (req, res) => {
+    networkDao.getNetwork()
+        .then(network => res.json(network))
+        .catch(err => res.status(500).json(err));
+});
+
+// GET /api/segments — all adjacent station pairs, no line info (Planning phase list)
+app.get('/api/segments', isLoggedIn, (req, res) => {
+    networkDao.getSegments()
+        .then(segments => res.json(segments))
+        .catch(err => res.status(500).json(err));
 });
 
 
