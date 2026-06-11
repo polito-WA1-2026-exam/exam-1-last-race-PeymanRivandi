@@ -1,122 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import { useEffect, useState } from 'react';
+import { Container, Toast, ToastBody } from 'react-bootstrap';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
+import FeedbackContext from './contexts/FeedbackContext.js';
+import API from './API.js';
+import HomePage from './components/HomePage.jsx';
+import LoginPage from './components/LoginPage.jsx';
+import GamePage from './components/GamePage.jsx';
+import RankingPage from './components/RankingPage.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [user, setUser] = useState(null);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [feedback, setFeedback] = useState('');
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    const setFeedbackFromError = (err) => {
+        const message = err.message || 'Unknown error';
+        setFeedback(message);
+    };
 
-      <div className="ticks"></div>
+    // On first mount, check if a session already exists (e.g. page reload)
+    useEffect(() => {
+        API.getUserInfo()
+            .then(user => {
+                setLoggedIn(true);
+                setUser(user);
+            })
+            .catch(e => {
+                if (loggedIn) setFeedbackFromError(e);
+                setLoggedIn(false);
+                setUser(null);
+            });
+    }, []);
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+    const handleLogin = async (credentials) => {
+        const user = await API.logIn(credentials);
+        setUser(user);
+        setLoggedIn(true);
+        setFeedback('Welcome, ' + user.username);
+    };
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    const handleLogout = async () => {
+        await API.logOut();
+        setLoggedIn(false);
+        setUser(null);
+    };
+
+    return (
+        <FeedbackContext.Provider value={{ setFeedback, setFeedbackFromError }}>
+            <div className="min-vh-100 d-flex flex-column">
+                <Container fluid className="flex-grow-1 d-flex flex-column">
+                    <Routes>
+                        <Route path="/" element={
+                            <HomePage loggedIn={loggedIn} user={user} />
+                        } />
+                        <Route path="/login" element={
+                            loggedIn
+                                ? <Navigate replace to="/" />
+                                : <LoginPage login={handleLogin} />
+                        } />
+                        <Route path="/game" element={
+                            !loggedIn
+                                ? <Navigate replace to="/login" />
+                                : <GamePage user={user} />
+                        } />
+                        <Route path="/ranking" element={
+                            !loggedIn
+                                ? <Navigate replace to="/login" />
+                                : <RankingPage />
+                        } />
+                        <Route path="*" element={<Navigate replace to="/" />} />
+                    </Routes>
+                </Container>
+
+                <Toast
+                    show={feedback !== ''}
+                    autohide
+                    onClose={() => setFeedback('')}
+                    delay={4000}
+                    position="top-end"
+                    className="position-fixed end-0 m-3"
+                >
+                    <ToastBody>{feedback}</ToastBody>
+                </Toast>
+            </div>
+        </FeedbackContext.Provider>
+    );
 }
 
-export default App
+export default App;
