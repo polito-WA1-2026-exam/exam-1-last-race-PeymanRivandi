@@ -7,6 +7,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import FeedbackContext from './contexts/FeedbackContext.js';
 import API from './API.js';
+import NavBar from './components/NavBar.jsx';
 import HomePage from './components/HomePage.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import GamePage from './components/GamePage.jsx';
@@ -52,6 +53,7 @@ function App() {
     return (
         <FeedbackContext.Provider value={{ setFeedback, setFeedbackFromError }}>
             <div className="min-vh-100 d-flex flex-column">
+                <NavBar loggedIn={loggedIn} user={user} onLogout={handleLogout} />
                 <Container fluid className="flex-grow-1 d-flex flex-column">
                     <Routes>
                         <Route path="/" element={
