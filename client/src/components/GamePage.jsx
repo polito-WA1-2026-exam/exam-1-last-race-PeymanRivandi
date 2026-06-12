@@ -125,6 +125,7 @@ function GamePage() {
     if (phase === 'planning')
         return (
             <PlanningPhase
+                network={network}
                 segments={segments}
                 start={start}
                 destination={destination}

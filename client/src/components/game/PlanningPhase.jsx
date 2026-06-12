@@ -1,6 +1,7 @@
-import { Badge, Button, Col, ListGroup, ProgressBar, Row } from 'react-bootstrap';
+import { Button, Col, ListGroup, ProgressBar, Row } from 'react-bootstrap';
+import NetworkMap from './NetworkMap.jsx';
 
-function PlanningPhase({ segments, start, destination, route, timeLeft, stationMap, onSegmentClick, onRemoveLast, onSubmit }) {
+function PlanningPhase({ network, segments, start, destination, route, timeLeft, stationMap, onSegmentClick, onRemoveLast, onSubmit }) {
 
     // Derive the set of already-used segment keys from the current route
     const usedKeys = new Set();
@@ -18,10 +19,6 @@ function PlanningPhase({ segments, start, destination, route, timeLeft, stationM
 
     // Sort segments alphabetically so the player can scan the list more easily
     const sortedSegments = [...segments].sort((a, b) => a.from_name.localeCompare(b.from_name));
-
-    // All unique stations for the map (station dots only, no line info)
-    const allStations = Object.entries(stationMap).map(([id, name]) => ({ id: Number(id), name }))
-        .sort((a, b) => a.name.localeCompare(b.name));
 
     return (
         <div className="py-4 px-3">
@@ -46,23 +43,20 @@ function PlanningPhase({ segments, start, destination, route, timeLeft, stationM
             </Row>
 
             <Row>
-                {/* Left column: stations (names only, no lines) + current route */}
+                {/* Left column: map (stations only, no lines) + current route */}
                 <Col md={4} className="mb-3">
-                    <h5>Stations</h5>
-                    <div className="d-flex flex-wrap gap-1 mb-4">
-                        {allStations.map(s => (
-                            <Badge
-                                key={s.id}
-                                bg={s.id === start.id ? 'primary' : s.id === destination.id ? 'success' : 'secondary'}
-                                className="px-2 py-1"
-                            >
-                                {s.name}
-                            </Badge>
-                        ))}
-                    </div>
-                    <p className="text-muted small">
-                        <span className="badge bg-primary me-1">blue</span> = start &nbsp;
-                        <span className="badge bg-success me-1">green</span> = destination
+                    <NetworkMap
+                        network={network}
+                        showLines={false}
+                        startId={start.id}
+                        destId={destination.id}
+                        stationMap={stationMap}
+                    />
+                    <p className="text-muted small mt-2">
+                        <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: '#3b82f6' }} className="me-1" />
+                        start &nbsp;
+                        <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: '#22c55e' }} className="me-1" />
+                        destination
                     </p>
 
                     <h5 className="mt-3">Your Route</h5>
