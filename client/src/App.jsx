@@ -72,7 +72,7 @@ function App() {
                         <Route path="/ranking" element={
                             !loggedIn
                                 ? <Navigate replace to="/login" />
-                                : <RankingPage />
+                                : <RankingPage user={user} />
                         } />
                         <Route path="*" element={<Navigate replace to="/" />} />
                     </Routes>
