@@ -11,7 +11,7 @@ function ExecutionPhase({ events, stationMap, onDone }) {
         <div className="py-4 px-3">
             <h2>Execution</h2>
             <p className="text-muted">
-                Step {index + 1} of {events.length} — watching events unfold along your route.
+                Step {index + 1} of {events.length}
             </p>
 
             <Row className="justify-content-center">

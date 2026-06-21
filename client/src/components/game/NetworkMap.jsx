@@ -3,22 +3,22 @@ import { Fragment } from 'react';
 // Fixed (x,y) positions for each station — matched to the Westeros Rail Network map.
 // ViewBox is 0 0 1000 750. These were set by looking at the reference image.
 const POSITIONS = {
-    'Winterfell':      { x: 500, y:  70 },
-    'Greywater Watch': { x: 515, y: 185 },
-    'The Twins':       { x: 530, y: 270 },
-    'Riverrun':        { x: 415, y: 340 },
-    "King's Landing":  { x: 605, y: 380 },
-    'Dragonstone':     { x: 830, y: 360 },
-    'Gultown':         { x: 875, y: 300 },
-    'White Harbor':    { x: 720, y: 120 },
-    'The Eyrie':       { x: 685, y: 270 },
-    'Pyke':            { x: 335, y: 315 },
-    'Lannisport':      { x: 365, y: 400 },
-    'Highgarden':      { x: 465, y: 505 },
-    'Oldtown':         { x: 360, y: 580 },
-    'Starfall':        { x: 515, y: 650 },
-    'Sunspear':        { x: 700, y: 615 },
-    "Storm's End":     { x: 680, y: 505 },
+    'Winterfell':      { x: 380, y:  70 },
+    'Greywater Watch': { x: 360, y: 185 },
+    'The Twins':       { x: 350, y: 270 },
+    'Riverrun':        { x: 330, y: 340 },
+    "King's Landing":  { x: 500, y: 380 },
+    'Dragonstone':     { x: 750, y: 380 },
+    'Gultown':         { x: 800, y: 290 },
+    'White Harbor':    { x: 600, y: 120 },
+    'The Eyrie':       { x: 580, y: 240 },
+    'Pyke':            { x: 110, y: 280 },
+    'Lannisport':      { x: 130, y: 400 },
+    'Highgarden':      { x: 280, y: 505 },
+    'Oldtown':         { x: 200, y: 600 },
+    'Starfall':        { x: 450, y: 680 },
+    'Sunspear':        { x: 650, y: 615 },
+    "Storm's End":     { x: 620, y: 505 },
 };
 
 // Text anchor and offset for each label so they don't overlap the circle or each other
@@ -133,15 +133,15 @@ function NetworkMap({ network, showLines, startId, destId, stationMap }) {
 
             {/* Legend — only shown with full map (Setup phase) */}
             {showLines && (
-                <div className="d-flex flex-wrap gap-3 mt-2 px-1">
+                <div className="d-flex flex-wrap gap-4 mt-3 px-1">
                     {network.map(line => (
-                        <span key={line.id} className="d-flex align-items-center gap-1 small">
+                        <span key={line.id} className="d-flex align-items-center gap-2 fw-semibold fs-6">
                             <span
                                 style={{
                                     display: 'inline-block',
-                                    width: 28, height: 4,
+                                    width: 36, height: 6,
                                     backgroundColor: line.hex_color,
-                                    borderRadius: 2,
+                                    borderRadius: 3,
                                     border: line.hex_color === '#ffffff' ? '1px solid #888' : 'none',
                                 }}
                             />

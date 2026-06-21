@@ -55,7 +55,7 @@ function HomePage({ loggedIn }) {
                             <Card.Text>
                                 You are given a <strong>starting station</strong> and a{' '}
                                 <strong>destination</strong> (at least 3 segments apart). The map now
-                                shows only station names — no lines. Build your route by selecting
+                                shows only station names, without the lines. Build your route by selecting
                                 segments from the list. <strong>You have 90 seconds.</strong> Each
                                 segment may be used only once. Line changes are only possible at
                                 interchange stations.
