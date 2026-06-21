@@ -146,16 +146,18 @@ export async function initDb() {
 
     // --- Events ---
     const events = [
-      { description: 'Quiet journey, no surprises.',             effect:  0 },
-      { description: 'Wrong platform — had to backtrack.',       effect: -2 },
-      { description: 'A kind passenger offered you their seat.', effect:  1 },
-      { description: 'Train delayed, coins lost waiting.',       effect: -1 },
-      { description: 'Found a lucky coin on the floor.',         effect:  2 },
-      { description: 'Pickpocket struck in the crowd.',          effect: -3 },
-      { description: 'Station vendor gave you free coffee.',     effect:  1 },
-      { description: 'Signal failure — long wait ahead.',        effect: -4 },
-      { description: 'Express service, arrived ahead of time.',  effect:  3 },
-      { description: 'Overcrowded carriage, exhausting trip.',   effect: -1 },
+      { description: 'Uneventful crossing through the Kingsroad.',                            effect:  0 },
+      { description: 'Boarded the wrong carriage, forced to backtrack through the Riverlands.', effect: -2 },
+      { description: 'A kind crow shared directions and a copper coin.',                       effect:  1 },
+      { description: 'Sellswords at the gate demanded a toll for passage.',                    effect: -1 },
+      { description: 'Lannister guards cleared the platform. You boarded without delay.',      effect:  2 },
+      { description: 'A cutpurse from Flea Bottom lifted your coin pouch.',                    effect: -3 },
+      { description: 'A maester tended to travelers with herbs fresh from Oldtown.',           effect:  1 },
+      { description: 'Wildfire explosion blocked the tunnel. Emergency evacuation required.',  effect: -4 },
+      { description: 'Dragon sighted beyond the hills. The panicked crowd made way for you.', effect:  3 },
+      { description: 'Night Watch conscriptors held up the platform. Departure delayed.',      effect: -1 },
+      { description: 'The Hand of the King granted you free passage and a full escort.',       effect:  4 },
+      { description: 'White Walker frost swept through. All trains north of the Neck halted.', effect: -4 },
     ];
     for (const e of events) {
       await dbRun(
