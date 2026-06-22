@@ -15,14 +15,14 @@ export default function GameDao() {
             `;
             db.all(sql, [], (err, rows) => {
                 if (err) { reject(err); return; }
-                const adj = {};
+                const adjacency = {};
                 for (const row of rows) {
-                    if (!adj[row.from_id]) adj[row.from_id] = [];
-                    if (!adj[row.to_id])   adj[row.to_id]   = [];
-                    adj[row.from_id].push(row.to_id);
-                    adj[row.to_id].push(row.from_id);   // network is bidirectional
+                    if (!adjacency[row.from_id]) adjacency[row.from_id] = [];
+                    if (!adjacency[row.to_id])   adjacency[row.to_id]   = [];
+                    adjacency[row.from_id].push(row.to_id);
+                    adjacency[row.to_id].push(row.from_id);   // network is bidirectional
                 }
-                resolve(adj);
+                resolve(adjacency);
             });
         });
     };
@@ -40,34 +40,36 @@ export default function GameDao() {
     // Returns data needed to validate a submitted route:
     //   segmentLines  — { "minId-maxId": [lineId, ...] }
     //   interchangeIds — Set of station IDs that are on more than one line
+    // Two queries are nested (not Promise.all) because sqlite3 is callback-based:
+    // the second query must start inside the callback of the first.
     this.getValidationData = () => {
         return new Promise((resolve, reject) => {
-            const segSql = `
+            const segmentSql = `
                 SELECT ls1.station_id AS from_id, ls2.station_id AS to_id, ls1.line_id
                 FROM line_stations ls1
                 JOIN line_stations ls2 ON ls1.line_id  = ls2.line_id
                                       AND ls2.position = ls1.position + 1
             `;
-            db.all(segSql, [], (err, segRows) => {
+            db.all(segmentSql, [], (err, segmentRows) => {
                 if (err) { reject(err); return; }
 
-                const interSql = `
+                const interchangeSql = `
                     SELECT station_id FROM line_stations
                     GROUP BY station_id HAVING COUNT(DISTINCT line_id) > 1
                 `;
-                db.all(interSql, [], (err, interRows) => {
+                db.all(interchangeSql, [], (err, interchangeRows) => {
                     if (err) { reject(err); return; }
 
                     // Build canonical segment key → list of lines that contain it
                     const segmentLines = {};
-                    for (const row of segRows) {
+                    for (const row of segmentRows) {
                         const key = `${Math.min(row.from_id, row.to_id)}-${Math.max(row.from_id, row.to_id)}`;
                         if (!segmentLines[key]) segmentLines[key] = [];
                         if (!segmentLines[key].includes(row.line_id))
                             segmentLines[key].push(row.line_id);
                     }
 
-                    const interchangeIds = new Set(interRows.map(r => r.station_id));
+                    const interchangeIds = new Set(interchangeRows.map(r => r.station_id));
                     resolve({ segmentLines, interchangeIds });
                 });
             });

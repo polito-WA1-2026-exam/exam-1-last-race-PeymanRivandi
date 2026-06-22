@@ -173,8 +173,8 @@ function validateRoute(route, segmentLines, interchangeIds) {
             if (nextOptions.includes(line))
                 nextReachable.add(line);        // continue on same line
             if (isInterchange) {
-                for (const nl of nextOptions)
-                    nextReachable.add(nl);      // switch line at interchange
+                for (const nextLine of nextOptions)
+                    nextReachable.add(nextLine); // switch line at interchange
             }
         }
 

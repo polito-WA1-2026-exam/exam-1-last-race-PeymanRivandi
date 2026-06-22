@@ -102,7 +102,7 @@ function NetworkMap({ network, showLines, startId, destId, stationMap }) {
 
                 {/* Station circles + labels */}
                 {stations.map(station => {
-                    const off    = LABEL_OFFSETS[station.name] || { dx: 0, dy: -16, anchor: 'middle' };
+                    const labelOffset = LABEL_OFFSETS[station.name] || { dx: 0, dy: -16, anchor: 'middle' };
                     const isStart = station.name === startName;
                     const isDest  = station.name === destName;
                     const fill    = isStart ? '#22c55e' : isDest ? '#ef4444' : '#ffffff';
@@ -117,9 +117,9 @@ function NetworkMap({ network, showLines, startId, destId, stationMap }) {
                                 strokeWidth={2}
                             />
                             <text
-                                x={station.x + off.dx}
-                                y={station.y + off.dy}
-                                textAnchor={off.anchor}
+                                x={station.x + labelOffset.dx}
+                                y={station.y + labelOffset.dy}
+                                textAnchor={labelOffset.anchor}
                                 fill={isStart ? '#86efac' : isDest ? '#fca5a5' : '#e2e8f0'}
                                 fontSize={12}
                                 fontFamily="sans-serif"

@@ -80,7 +80,7 @@ The database is created and seeded automatically on first server start.
 ## Database Tables
 
 - Table `users` - contains registered users: `id`, `username`, `hash`, `salt` (passwords hashed with scrypt)
-- Table `lines` - contains metro lines: `id`, `name`, `color`, `hex_color`
+- Table `lines` - contains metro lines: `id`, `name`, `hex_color`
 - Table `stations` - contains station names: `id`, `name`
 - Table `line_stations` - junction table linking lines to stations with a `position` column that defines the stop order along each line
 - Table `events` - contains random events: `id`, `description`, `effect` (integer from −4 to +4)
@@ -101,9 +101,9 @@ The database is created and seeded automatically on first server start.
 
 ## Screenshot
 
-![Ranking page](./screenshots/ranking.png)
+![Ranking page](./screenshots/ranking.jpg)
 
-![Game in progress](./screenshots/game.png)
+![Game in progress](./screenshots/game.jpg)
 
 ## Users Credentials
 
@@ -113,3 +113,6 @@ The database is created and seeded automatically on first server start.
 
 ## Use of AI Tools
 
+Claude Code (Anthropic) was used as a coding assistant throughout the project. All generated code was reviewed, tested, and adjusted by me.
+
+ChatGPT was used throughout the project for asking questions, generating station names based on my ideas, and generating the lore text on the home page.
