@@ -99,7 +99,7 @@ The database is created and seeded automatically on first server start.
 - `NetworkMap` (in `components/game/NetworkMap.jsx`): reusable SVG map; renders full lines in Setup phase, stations only in Planning phase
 - `RankingPage` (in `components/RankingPage.jsx`): fetches and displays the best-score leaderboard, highlights the current user's row
 
-## Screenshot
+## Screenshots
 
 ![Ranking page](./screenshots/ranking.jpg)
 
@@ -113,6 +113,6 @@ The database is created and seeded automatically on first server start.
 
 ## Use of AI Tools
 
-Claude Code (Anthropic) was used as a coding assistant throughout the project. All generated code was reviewed, tested, and adjusted by me.
+Claude Code was used as a coding assistant throughout the project. All generated code was reviewed, tested, and adjusted by me.
 
 ChatGPT was used throughout the project for asking questions, generating station names based on my ideas, and generating the lore text on the home page.
