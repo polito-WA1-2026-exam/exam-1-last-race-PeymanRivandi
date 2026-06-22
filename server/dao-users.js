@@ -5,22 +5,6 @@ import crypto from 'crypto';
 
 export default function UserDao() {
 
-    // Retrieve a user by id — used by passport deserializeUser
-    this.getUserById = (id) => {
-        return new Promise((resolve, reject) => {
-            const query = 'SELECT * FROM users WHERE id=?';
-            db.get(query, [id], (err, row) => {
-                if (err) {
-                    reject(err);
-                } else if (row === undefined) {
-                    resolve({ error: 'User not found.' });
-                } else {
-                    resolve({ id: row.id, username: row.username });
-                }
-            });
-        });
-    };
-
     // Retrieve a user by username and verify password — used by LocalStrategy
     this.getUserByCredentials = (username, password) => {
         return new Promise((resolve, reject) => {

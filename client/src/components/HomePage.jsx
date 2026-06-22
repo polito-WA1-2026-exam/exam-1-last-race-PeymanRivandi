@@ -94,7 +94,7 @@ function HomePage({ loggedIn }) {
 
             {/* Bottom banner */}
             <div className="bg-dark text-white text-center rounded py-5 px-3">
-                <i className="bi bi-train-front display-4 mb-3 d-block" />
+                <img src="/favicon.png" alt="Last Race" className="mb-3 d-block mx-auto" style={{ width: '72px', height: '72px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
                 <h1 className="fw-bold mb-4">Last Race</h1>
                 {loggedIn ? (
                     <Button as={Link} to="/game" variant="success" size="lg">

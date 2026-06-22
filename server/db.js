@@ -45,7 +45,6 @@ export async function initDb() {
   await dbRun(`CREATE TABLE IF NOT EXISTS lines (
     id        INTEGER PRIMARY KEY AUTOINCREMENT,
     name      TEXT UNIQUE NOT NULL,
-    color     TEXT NOT NULL,
     hex_color TEXT NOT NULL
   )`);
 
@@ -98,17 +97,17 @@ export async function initDb() {
 
     // --- Lines ---
     const lineList = [
-      { name: 'Kingsroad Line',   color: 'White', hex_color: '#ffffff' },
-      { name: 'White Knife Line', color: 'Blue',  hex_color: '#0026ff' },
-      { name: 'Gold Road Line',   color: 'Red',   hex_color: '#ff0000' },
-      { name: 'Roseroad Line',    color: 'Green', hex_color: '#00ff21' },
-      { name: 'Ocean Road Line',  color: 'Cyan',  hex_color: '#00ffff' },
+      { name: 'Kingsroad Line',   hex_color: '#ffffff' },
+      { name: 'White Knife Line', hex_color: '#0026ff' },
+      { name: 'Gold Road Line',   hex_color: '#ff0000' },
+      { name: 'Roseroad Line',    hex_color: '#00ff21' },
+      { name: 'Ocean Road Line',  hex_color: '#00ffff' },
     ];
     const lineIds = {};
     for (const l of lineList) {
       const result = await dbRun(
-        'INSERT INTO lines (name, color, hex_color) VALUES (?, ?, ?)',
-        [l.name, l.color, l.hex_color]
+        'INSERT INTO lines (name, hex_color) VALUES (?, ?)',
+        [l.name, l.hex_color]
       );
       lineIds[l.name] = result.lastID;
     }

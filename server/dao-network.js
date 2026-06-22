@@ -9,7 +9,7 @@ export default function NetworkDao() {
         return new Promise((resolve, reject) => {
             const sql = `
                 SELECT l.id    AS line_id,   l.name AS line_name,
-                       l.color, l.hex_color,
+                       l.hex_color,
                        s.id    AS station_id, s.name AS station_name,
                        ls.position
                 FROM lines l
@@ -28,7 +28,6 @@ export default function NetworkDao() {
                             map[row.line_id] = {
                                 id:        row.line_id,
                                 name:      row.line_name,
-                                color:     row.color,
                                 hex_color: row.hex_color,
                                 stations:  [],
                             };

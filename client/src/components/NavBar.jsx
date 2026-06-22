@@ -8,7 +8,7 @@ function NavBar({ loggedIn, user, onLogout }) {
         <Navbar bg="dark" variant="dark" expand="sm">
             <Container fluid>
                 <Navbar.Brand as={Link} to="/">
-                    <i className="bi bi-train-front me-2" />
+                    <img src="/favicon.png" alt="" style={{ width: '22px', height: '22px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} className="me-2" />
                     Last Race
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="main-nav" />

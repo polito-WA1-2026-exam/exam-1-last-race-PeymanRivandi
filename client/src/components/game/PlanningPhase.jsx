@@ -50,14 +50,14 @@ function PlanningPhase({ network, segments, start, destination, route, timeLeft,
                         stationMap={stationMap}
                     />
                     <p className="text-muted small mt-2 mb-1">
-                        <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: '#3b82f6' }} className="me-1" />
-                        start &nbsp;
                         <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: '#22c55e' }} className="me-1" />
+                        start &nbsp;
+                        <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: '#ef4444' }} className="me-1" />
                         destination
                     </p>
                     <p className="fw-bold fs-5 mb-3">
-                        From <span className="text-primary">{start.name}</span>{' '}
-                        to <span className="text-success">{destination.name}</span>
+                        From <span className="text-success">{start.name}</span>{' '}
+                        to <span className="text-danger">{destination.name}</span>
                     </p>
 
                     <h5 className="mt-1">Your Route</h5>
@@ -86,7 +86,7 @@ function PlanningPhase({ network, segments, start, destination, route, timeLeft,
                                 Undo
                             </Button>
                         )}
-                        <Button variant="primary" onClick={onSubmit}>
+                        <Button variant="primary" size="lg" onClick={onSubmit}>
                             Submit Route
                         </Button>
                     </div>
